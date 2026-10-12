@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quase lá · Continuar</title>
+  <title>Almost there · Continue</title>
   <style>
     /* ── reset & base ── */
     * {
@@ -347,7 +347,7 @@
         <span class="step-dot done"></span>
         <span class="step-dot active"></span>
         <span class="step-dot"></span>
-        <span class="step-label">Passo 3 de 4</span>
+        <span class="step-label">Step 3 of 4</span>
       </div>
 
       <div class="icon-wrapper">
@@ -356,31 +356,31 @@
         </div>
       </div>
 
-      <h1>Você está quase lá!</h1>
+      <h1>You're almost there!</h1>
       <p class="subhead">
-        Clique no botão abaixo para continuar e concluir sua verificação.
+        Click the button below to continue and complete your verification.
       </p>
 
       <div class="highlight-box">
         <div class="highlight-row">
           <span class="check-icon">✓</span>
-          <span>Verificação em andamento</span>
+          <span>Verification in progress</span>
         </div>
         <div class="highlight-row">
           <span class="check-icon">✓</span>
-          <span>Último passo antes da confirmação</span>
+          <span>Last step before confirmation</span>
         </div>
         <div class="highlight-row">
           <span class="check-icon">✓</span>
-          <span>Processo seguro e rápido</span>
+          <span>Safe and fast process</span>
         </div>
       </div>
 
       <button class="btn-primary" id="continueBtn">
-        CONTINUAR
+        CONTINUE
         <span class="arrow">→</span>
       </button>
-      <p class="note">Ao continuar, você concorda com os termos de verificação.</p>
+      <p class="note">By continuing, you agree to the verification terms.</p>
     </div>
 
     
@@ -390,7 +390,7 @@
         <span class="step-dot done"></span>
         <span class="step-dot done"></span>
         <span class="step-dot active"></span>
-        <span class="step-label">Passo 4 de 4</span>
+        <span class="step-label">Step 4 of 4</span>
       </div>
 
       <div class="icon-wrapper" style="margin-bottom: 6px;">
@@ -399,17 +399,17 @@
         </div>
       </div>
 
-      <div class="question-title">você é de moçambique?</div>
-      <p class="question-sub">Selecione uma opção para finalizar.</p>
+      <div class="question-title">Are you Above 18 years?</div>
+      <p class="question-sub">Select an option to finish.</p>
 
       <div class="choice-group">
-        <button class="choice-btn yes" id="yesBtn">Sim</button>
-        <button class="choice-btn no" id="noBtn">Não</button>
+        <button class="choice-btn yes" id="yesBtn">Yes</button>
+        <button class="choice-btn no" id="noBtn">No</button>
       </div>
 
       <div id="confirmationContainer" style="min-height: 50px; margin-top: 6px;"></div>
 
-      <p class="note" style="margin-top: 12px;">Ao escolher, você será redirecionado.</p>
+      <p class="note" style="margin-top: 12px;">Once you choose, you will be redirected.</p>
     </div>
   </div>
 
@@ -449,8 +449,8 @@
       function showConfirmation(choice) {
         const badge = document.createElement('div');
         badge.className = `confirmation-badge ${choice === 'yes' ? 'yes-badge' : 'no-badge'}`;
-        const label = choice === 'yes' ? 'Sim' : 'Não';
-        badge.innerHTML = `✅ Você selecionou: <strong>${label}</strong>`;
+        const label = choice === 'yes' ? 'Yes' : 'No';
+        badge.innerHTML = `✅ You selected: <strong>${label}</strong>`;
         confirmationContainer.innerHTML = '';
         confirmationContainer.appendChild(badge);
       }
@@ -498,7 +498,7 @@
       step2.style.display = 'none';
       resetSelection();
 
-      console.log('✅ Fluxo "Quase lá" (Português) pronto');
+      console.log('✅ "Almost there" flow (English) ready');
     })();
   </script>
 </body>
